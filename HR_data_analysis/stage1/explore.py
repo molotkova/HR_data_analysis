@@ -2,8 +2,7 @@ import pandas as pd
 import requests
 import os
 
-# write your code here
-
+# scroll down to the bottom to implement your solution
 
 if __name__ == '__main__':
 
@@ -32,6 +31,12 @@ if __name__ == '__main__':
         open('../Data/hr_data.xml', 'wb').write(r.content)
         print('Loaded.')
 
+        # All data in now loaded to the Data folder.
+
+    # write your code here
+
+    # Reference solution.
+    ###
     df_A = pd.read_xml('../Data/A_office_data.xml')
     df_B = pd.read_xml('../Data/B_office_data.xml')
     df_hr = pd.read_xml('../Data/hr_data.xml')
@@ -41,8 +46,7 @@ if __name__ == '__main__':
     print(list(df_A.index))
     print(list(df_B.index))
     print(list(df_hr.index))
-
-
+    ###
 
 
 

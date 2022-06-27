@@ -3,9 +3,9 @@ import ast
 import pandas as pd
 
 
-df_A = pd.read_xml('A_office_data.xml')
-df_B = pd.read_xml('B_office_data.xml')
-df_hr = pd.read_xml('hr_data.xml')
+df_A = pd.read_xml('../Data/A_office_data.xml')
+df_B = pd.read_xml('../Data/B_office_data.xml')
+df_hr = pd.read_xml('../Data/hr_data.xml')
 df_A.index = ['A' + str(i) for i in df_A['employee_office_id'].values]
 df_B.index = ['B' + str(i) for i in df_B['employee_office_id'].values]
 df_hr = df_hr.set_index(df_hr['employee_id'])

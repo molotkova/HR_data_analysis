@@ -23,8 +23,10 @@ class IndexTest(StageTest):
         if reply.count('[') != 3 or reply.count(']') != 3:
             return CheckResult.wrong('Print all three answers as a list')
 
-        if len(reply.split('\n')) != 3:
-            return CheckResult.wrong('The number of answers supplied does not equal 3')
+        num_of_lists = len(reply.split('\n'))
+        if num_of_lists != 3:
+            return CheckResult.wrong(f"Wrong number of answer lists. Expected 3, found {num_of_lists}.\n"
+                                     f"Make sure that each list is printed on a separate line.")
 
         ans_counter = 0
         for ans in reply.split('\n'):
@@ -34,9 +36,9 @@ class IndexTest(StageTest):
             correct_answer = answer_list[ans_counter]
             try:
                 user_list = ast.literal_eval(list_str)
-            except Exception as e:
+            except Exception:
                 return CheckResult.wrong(f"Seems that output is in wrong format.\n"
-                                         f"Make sure you use only the following Python structures in the output: string, int, float, list, dictionary")
+                                         f"Make sure you use only the following Python structures in the output: string, int, float, list, dictionary.")
 
             if not isinstance(user_list, list):
                 return CheckResult.wrong(f'Print {ans_counter + 1} answer as a list')

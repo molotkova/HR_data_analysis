@@ -36,10 +36,12 @@ class PivotTest(StageTest):
             return CheckResult.wrong("No output was printed")
 
         if reply.count('{') < 1 or reply.count('}') < 1:
-            return CheckResult.wrong('Print output as a dictionary')
+            return CheckResult.wrong('Print output as two dictionaries')
 
-        if len(reply.split('\n')) != 2:
-            return CheckResult.wrong('The number of answers supplied does not equal 2')
+        num_of_answers = len(reply.split('\n'))
+        if num_of_answers != 2:
+            return CheckResult.wrong(f"Wrong number of answers. Expected 2, found {num_of_answers}.\n"
+                                     f"Make sure that each answer is printed on a separate line.")
 
         reply_1 = reply.split('\n')[0]
         reply_2 = reply.split('\n')[1]
@@ -59,52 +61,50 @@ class PivotTest(StageTest):
                                      f"Make sure you use only the following Python structures in the output: string, int, float, list, dictionary")
 
         if not isinstance(user_dict_1, dict):
-            return CheckResult.wrong('Print first pivot table as a dictionary')
+            return CheckResult.wrong('Print the first pivot table as a dictionary')
 
         if not isinstance(user_dict_2, dict):
-            return CheckResult.wrong('Print second pivot table as a dictionary')
-
+            return CheckResult.wrong('Print the second pivot table as a dictionary')
 
         if len(answer_1.keys()) != len(user_dict_1.keys()):
-            return CheckResult.wrong(f'Output 1 should contain {len(answer_1.keys())} dict elements, found {len(user_dict_1.keys())}')
+            return CheckResult.wrong(f'Answer on the 1st line should contain {len(answer_1.keys())} dict elements, found {len(user_dict_1.keys())}')
 
         for key in answer_1.keys():
             if key not in user_dict_1.keys():
-                return CheckResult.wrong(f'Output 1 should contain {key} as key')
+                return CheckResult.wrong(f'Dictionary on the 1st line should contain \"{key}\" as a key')
 
         if len(answer_2.keys()) != len(user_dict_2.keys()):
-            return CheckResult.wrong(f'Output 2 should contain {len(answer_2.keys())} dict elements, found {len(user_dict_2.keys())}')
+            return CheckResult.wrong(f'Answer on the 2nd line should contain {len(answer_2.keys())} dict elements, found {len(user_dict_2.keys())}')
 
         for key in answer_2.keys():
             if key not in user_dict_2.keys():
-                return CheckResult.wrong(f'Output 2 should contain {key} as key')
+                return CheckResult.wrong(f'Dictionary on the 2nd line should contain \"{key}\" as a key')
 
         for key in user_dict_1.keys():
             curr_user_dict = user_dict_1[key]
             curr_answer_dict = answer_1[key]
             for key_curr in curr_user_dict.keys():
                 if key_curr not in curr_answer_dict.keys():
-                    return CheckResult.wrong(f'Output should not contain {key_curr} as key for department')
+                    return CheckResult.wrong(f'Output should not contain \"{key_curr}\" as a key for department')
                 curr_user_val = curr_user_dict[key_curr]
                 curr_answer_val = curr_answer_dict[key_curr]
                 error = abs(curr_answer_val * 0.02)
                 if not curr_user_val - error < curr_answer_val < curr_user_val + error:
                     return CheckResult.wrong(
-                        f'Wrong value of element {key} with left status {key_curr}')
+                        f'Wrong value of element with \"{key}\" key with left status \"{key_curr}\"')
 
         for key in user_dict_2.keys():
             curr_user_dict = user_dict_2[key]
             curr_answer_dict = answer_2[key]
             for key_curr in curr_user_dict.keys():
                 if key_curr not in curr_answer_dict.keys():
-                    return CheckResult.wrong(f'Output should not contain {key_curr} as time spent in comapny')
+                    return CheckResult.wrong(f'Output should not contain \"{key_curr}\" as a key for time spent in company')
                 curr_user_val = curr_user_dict[key_curr]
                 curr_answer_val = curr_answer_dict[key_curr]
                 error = abs(curr_answer_val * 0.02)
                 if not curr_user_val - error < curr_answer_val < curr_user_val + error:
                     return CheckResult.wrong(
-                        f'Wrong value of element {key} with left status {key_curr}')
-
+                        f'Wrong value of element with \"{key}\" key with left status \"{key_curr}\"')
 
         return CheckResult.correct()
 

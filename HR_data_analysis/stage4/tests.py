@@ -10,6 +10,7 @@ answer = {('Work_accident', 'mean'): {0: 0.18, 1: 0.04},
           ('time_spend_company', 'mean'): {0: 3.4, 1: 3.91},
           ('time_spend_company', 'median'): {0: 3.0, 1: 4.0}}
 
+
 class AggTest(StageTest):
 
     def generate(self) -> List[TestCase]:
@@ -38,27 +39,25 @@ class AggTest(StageTest):
         if not isinstance(user_dict, dict):
             return CheckResult.wrong('Print output as a dictionary')
 
-
         if len(answer.keys()) != len(user_dict.keys()):
             return CheckResult.wrong(f'Output should contain {len(answer.keys())} dict elements, found {len(user_dict.keys())}')
 
         for key in answer.keys():
             if key not in user_dict.keys():
-                return CheckResult.wrong(f'Output should contain {key_curr} as key')
+                return CheckResult.wrong(f'Output should contain \"{key}\" as a key')
 
         for key in user_dict.keys():
             curr_user_dict = user_dict[key]
             curr_answer_dict = answer[key]
             for key_curr in curr_user_dict.keys():
                 if key_curr not in curr_answer_dict.keys():
-                    return CheckResult.wrong(f'Output should not contain {key_curr} as key for employement status')
+                    return CheckResult.wrong(f'Output should not contain \"{key_curr}\" as a key for the employement status')
                 curr_user_val = curr_user_dict[key_curr]
                 curr_answer_val = curr_answer_dict[key_curr]
                 error = abs(curr_answer_val * 0.02)
                 if not curr_user_val - error < curr_answer_val < curr_user_val + error:
                     return CheckResult.wrong(
-                        f'Wrong value of element {key} with left status {key_curr}')
-
+                        f'Wrong value of the element with \"{key}\" key with left status \"{key_curr}\"')
 
         return CheckResult.correct()
 
