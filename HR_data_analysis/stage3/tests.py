@@ -74,6 +74,10 @@ class QuestionTest(StageTest):
             return CheckResult.wrong(f'List on the 3rd line should contain {len(answer_3)} values, found {len(list_str_reply_3)}')
 
         for j in range(len(list_str_reply_3)):
+            if not isinstance(list_str_reply_3[j], list):
+                return CheckResult.wrong(f'Element {j} of the list on the 3rd line is not a nested list.')
+
+        for j in range(len(list_str_reply_3)):
             if len(list_str_reply_3[j]) != 2:
                 return CheckResult.wrong(f'Each value of the list on the 3rd line is supposed to be a list with 2 values, '
                                          f'got {len(list_str_reply_3[j])} value(s)')
