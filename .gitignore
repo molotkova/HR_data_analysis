@@ -3,3 +3,4 @@ venv/
 HR_data_analysis/stage[1-5]/__pycache__/
 zipper.sh
 HR_data_analysis/Data/
+cp_script.sh
