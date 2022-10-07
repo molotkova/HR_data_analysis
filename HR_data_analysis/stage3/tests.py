@@ -53,7 +53,7 @@ class QuestionTest(StageTest):
         if not isinstance(list_str_reply_1, list):
             return CheckResult.wrong(f'Print 1st answer as a list')
 
-        if not (isinstance(reply_2, int) or isinstance(reply_2, float)):
+        if not isinstance(reply_2, (int, float)):
             return CheckResult.wrong(f'Print 2nd answer as a number')
 
         if not isinstance(list_str_reply_3, list):
@@ -75,15 +75,22 @@ class QuestionTest(StageTest):
 
         for j in range(len(list_str_reply_3)):
             if not isinstance(list_str_reply_3[j], list):
-                return CheckResult.wrong(f'Element {j} of the list on the 3rd line is not a nested list.')
+                return CheckResult.wrong(f'Element with index {j} of the list on the 3rd line is not a nested list.')
 
         for j in range(len(list_str_reply_3)):
             if len(list_str_reply_3[j]) != 2:
                 return CheckResult.wrong(f'Each value of the list on the 3rd line is supposed to be a list with 2 values, '
-                                         f'got {len(list_str_reply_3[j])} value(s)')
+                                         f'got {len(list_str_reply_3[j])} value(s) in the list with index {j}')
 
         for i in range(len(list_str_reply_3)):
             for j in range(len(list_str_reply_3[i])):
+
+                if not isinstance(list_str_reply_3[i][j], (int, float)):
+                    return CheckResult.wrong(f'The following value: {list_str_reply_3[i][j]}\n'
+                                             f'on the 3rd line of your output in the list with index {i} '
+                                             f'is neither of type \"int\" or \"float\".\n'
+                                             f'Type detected: {type(list_str_reply_3[i][j])}.')
+
                 if answer_3[i][j] != list_str_reply_3[i][j]:
                     return CheckResult.wrong(f"Seems like answer is not correct\n"
                                              f"Check element #{j} in the nested list #{i} of your answer on the 3rd line")

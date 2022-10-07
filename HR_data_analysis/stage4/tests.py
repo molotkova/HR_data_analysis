@@ -53,6 +53,12 @@ class AggTest(StageTest):
                 if key_curr not in curr_answer_dict.keys():
                     return CheckResult.wrong(f'Output should not contain \"{key_curr}\" as a key for the employement status')
                 curr_user_val = curr_user_dict[key_curr]
+
+                if not isinstance(curr_user_val, (int, float)):
+                    return CheckResult.wrong(f'The following value: {curr_user_val}\ncorresponding to the key: {key}\n'
+                                             f'with the following index: {key_curr}\nis neither of type \"int\" or \"float\".\n'
+                                             f'Type detected: {type(curr_user_val)}.')
+
                 curr_answer_val = curr_answer_dict[key_curr]
                 error = abs(curr_answer_val * 0.02)
                 if not curr_user_val - error < curr_answer_val < curr_user_val + error:
